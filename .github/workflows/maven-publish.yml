@@ -41,36 +41,6 @@ jobs:
         name: hospital-care-jar
         path: target/*.jar
 
-    - name: Create Release (on master push)
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ steps.get_version.outputs.VERSION }}-${{ github.run_number }}
-        release_name: Hospital Care v${{ steps.get_version.outputs.VERSION }}-build${{ github.run_number }}
-        body: |
-          ## Hospital Care Application Release
-
-          ### Features
-          - Patient registration and management
-          - JSON export functionality sorted by age (oldest first)
-          - CLI application for hospital patient management
-
-          ### Usage
-          Download the JAR file and run:
-          ```bash
-          java -jar hospital-care-${{ steps.get_version.outputs.VERSION }}.jar
-          ```
-
-          ### Build Information
-          - Version: ${{ steps.get_version.outputs.VERSION }}
-          - Build: ${{ github.run_number }}
-          - Commit: ${{ github.sha }}
-        draft: false
-        prerelease: false
-
     - name: Upload Release Asset (on master push)
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       uses: actions/upload-release-asset@v1
