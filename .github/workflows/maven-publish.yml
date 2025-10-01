@@ -40,14 +40,3 @@ jobs:
       with:
         name: hospital-care-jar
         path: target/*.jar
-
-    - name: Upload Release Asset (on master push)
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/hospital-care-${{ steps.get_version.outputs.VERSION }}.jar
-        asset_name: hospital-care-${{ steps.get_version.outputs.VERSION }}.jar
-        asset_content_type: application/java-archive
